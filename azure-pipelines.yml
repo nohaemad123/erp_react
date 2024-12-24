@@ -1,0 +1,30 @@
+pool:
+  vmImage: 'ubuntu-latest'  # Use Ubuntu image for the build process
+
+steps:
+
+# Step 1: Archive the entire project
+- task: ArchiveFiles@2
+  displayName: 'Archive Entire Project'
+  inputs:
+    rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+    includeRootFolder: false  # Do not include the root folder in the archive
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+
+# Step 2: Create the batch script file inside the Artifact Staging Directory
+- script: |
+    # Create a batch script with the npm install command
+    echo @echo off > $(Build.ArtifactStagingDirectory)/install-script.bat
+    echo cd /d C:/inetpub/wwwroot/alnasyan-erp-front >> $(Build.ArtifactStagingDirectory)/install-script.bat
+    echo npm install >> $(Build.ArtifactStagingDirectory)/install-script.bat
+  displayName: 'Create Batch Script File'
+
+# Step 3: Publish the zipped artifact including the batch script
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact with Batch Script'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'  # Publish the Artifact Staging Directory
+    ArtifactName: 'drop'
+    publishLocation: 'Container'

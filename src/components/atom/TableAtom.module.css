@@ -1,0 +1,38 @@
+table.table thead {
+  background-color: #f5f5f5;
+}
+
+table.table tr:first-child th:first-child {
+  border-start-start-radius: 3px;
+}
+table.table tr:first-child th:last-child {
+  border-start-end-radius: 3px;
+}
+
+table.table tr:last-child th:first-child {
+  border-end-start-radius: 3px;
+}
+table.table tr:last-child th:last-child {
+  border-end-end-radius: 3px;
+}
+
+table.default tr td,
+table.table tr th {
+  padding: 10px;
+  font-size: 12px;
+}
+
+table.default tr td {
+  border-top: 1px solid #e6e7ec;
+}
+table.dynamic tr th,
+table.dynamic tr td {
+  border: 1px solid #ededed;
+}
+table.dynamic tr td {
+  padding-inline: 4px;
+}
+
+table.default tr:first-child td {
+  border-top-color: transparent;
+}
